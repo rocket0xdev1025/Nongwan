@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nongwan | $Nongwan on Robinhood</title>
+  <meta name="description" content="Nongwan ran. In English? Who cares about the language. The chillest capybara meme on Robinhood ETH." />
+  <link rel="icon" href="logo.png" type="image/png" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            leaf: {
+              50: "#f3fce8",
+              100: "#e4f8c8",
+              200: "#c9f191",
+              300: "#a8e34f",
+              400: "#8fd12a",
+              500: "#6fb010",
+              600: "#548c0a",
+              700: "#416b0d",
+              800: "#365610",
+              900: "#2f4913",
+              950: "#162806",
+            },
+            mud: "#5c3d2e",
+            cream: "#fff8e7",
+          },
+          fontFamily: {
+            display: ['"Fredoka"', "system-ui", "sans-serif"],
+            body: ['"Nunito"', "system-ui", "sans-serif"],
+            stamp: ['"Bangers"', "cursive"],
+          },
+          boxShadow: {
+            cartoon: "6px 6px 0 0 #162806",
+            "cartoon-sm": "4px 4px 0 0 #162806",
+            "cartoon-lg": "10px 10px 0 0 #162806",
+            "cartoon-lime": "6px 6px 0 0 #6fb010",
+          },
+          animation: {
+            float: "float 4s ease-in-out infinite",
+            wiggle: "wiggle 2.5s ease-in-out infinite",
+            bounce-slow: "bounce-slow 3s ease-in-out infinite",
+            pop: "pop 0.5s ease-out",
+          },
+          keyframes: {
+            float: {
+              "0%, 100%": { transform: "translateY(0)" },
+              "50%": { transform: "translateY(-12px)" },
+            },
+            wiggle: {
+              "0%, 100%": { transform: "rotate(-2deg)" },
+              "50%": { transform: "rotate(2deg)" },
+            },
+            "bounce-slow": {
+              "0%, 100%": { transform: "translateY(0) scale(1)" },
+              "50%": { transform: "translateY(-8px) scale(1.03)" },
+            },
+            pop: {
+              "0%": { transform: "scale(0.9)", opacity: "0" },
+              "100%": { transform: "scale(1)", opacity: "1" },
+            },
+          },
+        },
+      },
+    };
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Fredoka:wght@400;500;600;700&family=Nunito:wght@500;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    html { scroll-behavior: smooth; }
+
+    body {
+      background-color: #162806;
+      background-image:
+        radial-gradient(ellipse at 20% 10%, rgba(143, 209, 42, 0.25), transparent 45%),
+        radial-gradient(ellipse at 80% 20%, rgba(84, 140, 10, 0.35), transparent 40%),
+        radial-gradient(ellipse at 50% 80%, rgba(65, 107, 13, 0.4), transparent 50%),
+        repeating-linear-gradient(
+          -12deg,
+          transparent,
+          transparent 18px,
+          rgba(143, 209, 42, 0.04) 18px,
+          rgba(143, 209, 42, 0.04) 36px
+        );
+    }
+
+    .leaf-blob {
+      position: absolute;
+      border-radius: 60% 40% 55% 45% / 50% 55% 45% 50%;
+      background: linear-gradient(145deg, #8fd12a, #416b0d);
+      opacity: 0.18;
+      filter: blur(2px);
+      pointer-events: none;
+    }
+
+    .wave-divider {
+      line-height: 0;
+    }
+
+    .wave-divider svg {
+      display: block;
+      width: 100%;
+      height: 64px;
+    }
+
+    .stamp {
+      display: inline-block;
+      transform: rotate(-3deg);
+      border: 3px dashed #6fb010;
+      padding: 0.25rem 0.75rem;
+      letter-spacing: 0.08em;
+    }
+
+    .step-num {
+      -webkit-text-stroke: 3px #162806;
+      text-shadow: 4px 4px 0 #162806;
+    }
+
+    .ca-box:active {
+      transform: translate(2px, 2px);
+      box-shadow: 2px 2px 0 0 #162806;
+    }
+
+    .btn-cartoon {
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+    .btn-cartoon:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: 8px 8px 0 0 #162806;
+    }
+    .btn-cartoon:active {
+      transform: translate(2px, 2px);
+      box-shadow: 2px 2px 0 0 #162806;
+    }
+
+    .hero-overlay {
+      background:
+        linear-gradient(180deg, rgba(22, 40, 6, 0.55) 0%, rgba(22, 40, 6, 0.25) 40%, rgba(22, 40, 6, 0.85) 100%),
+        linear-gradient(90deg, rgba(22, 40, 6, 0.5) 0%, transparent 45%);
+    }
+
+    #dexscreener-embed {
+      position: relative;
+      width: 100%;
+      padding-bottom: 125%;
+    }
+    @media (min-width: 1400px) {
+      #dexscreener-embed { padding-bottom: 65%; }
+    }
+    #dexscreener-embed iframe {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      border: 0;
+      border-radius: 1.25rem;
+    }
+
+    .twitter-embed-wrap iframe {
+      margin: 0 auto !important;
+    }
+  </style>
+</head>
+<body class="font-body text-cream overflow-x-hidden">
+  <!-- Floating blobs -->
+  <div class="leaf-blob w-64 h-64 top-20 -left-20 animate-float" aria-hidden="true"></div>
+  <div class="leaf-blob w-48 h-48 top-[40%] -right-10 animate-bounce-slow" aria-hidden="true"></div>
+  <div class="leaf-blob w-72 h-72 bottom-40 left-1/3 animate-float" style="animation-delay: 1.2s" aria-hidden="true"></div>
+
+  <!-- NAV -->
+  <header class="fixed top-0 inset-x-0 z-50 bg-leaf-950/80 backdrop-blur-md border-b-4 border-leaf-500">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between gap-4">
+      <a href="#top" class="flex items-center gap-3 group">
+        <img
+          src="logo.png"
+          alt="Nongwan logo"
+          class="w-12 h-12 rounded-full border-4 border-leaf-400 shadow-cartoon-sm object-cover group-hover:animate-wiggle"
+        />
+        <span class="font-display font-bold text-2xl tracking-wide text-leaf-300 drop-shadow-[2px_2px_0_#162806]">
+          Nongwan
+        </span>
+      </a>
+      <nav class="hidden md:flex items-center gap-6 font-display font-semibold text-leaf-100">
+        <a href="#about" class="hover:text-leaf-300 transition">About</a>
+        <a href="#howtobuy" class="hover:text-leaf-300 transition">How to Buy</a>
+        <a href="#chart" class="hover:text-leaf-300 transition">Chart</a>
+        <a href="#tweet" class="hover:text-leaf-300 transition">Tweet</a>
+      </nav>
+      <div class="flex items-center gap-3">
+        <a href="https://t.me/NongwanHood" target="_blank" rel="noopener noreferrer" aria-label="Telegram" class="hover:scale-110 transition">
+          <img src="tg.png" alt="Telegram" class="w-9 h-9 rounded-full border-2 border-leaf-950 shadow-cartoon-sm" />
+        </a>
+        <a href="https://x.com/NongwanHood" target="_blank" rel="noopener noreferrer" aria-label="X / Twitter" class="hover:scale-110 transition">
+          <img src="x.png" alt="X" class="w-9 h-9 rounded-full border-2 border-leaf-400 shadow-cartoon-sm object-cover bg-black" />
+        </a>
+        <a
+          href="https://app.uniswap.org/swap?chain=robinhood&outputCurrency=TBA"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="btn-cartoon hidden sm:inline-flex items-center px-4 py-2 bg-leaf-400 text-leaf-950 font-display font-bold text-lg rounded-xl border-4 border-leaf-950 shadow-cartoon-sm"
+        >
+          Buy Now
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main id="top">
+    <!-- HERO -->
+    <section class="relative min-h-screen flex items-end pt-20">
+      <div class="absolute inset-0">
+        <img
+          src="banner.png"
+          alt="Nongwan banner — chill capybara in the jungle"
+          class="w-full h-full object-cover object-center"
+        />
+        <div class="absolute inset-0 hero-overlay"></div>
+      </div>
+
+      <div class="relative z-10 w-full max-w-6xl mx-auto px-4 pb-16 md:pb-24 pt-10">
+        <p class="font-stamp text-leaf-300 text-2xl md:text-3xl mb-3 stamp bg-leaf-950/40">
+          $Nongwan
+        </p>
+        <h1 class="font-display font-bold text-5xl sm:text-6xl md:text-8xl leading-none text-cream drop-shadow-[4px_4px_0_#162806] mb-4 animate-pop">
+          Nongwan
+        </h1>
+        <p class="max-w-xl text-lg md:text-2xl font-bold text-leaf-100 mb-8 leading-snug">
+          Nongwan ran. In English? Who cares about the language.
+          <span class="text-leaf-300">Just chill. Just buy. Just Nongwan.</span>
+        </p>
+
+        <div class="flex flex-wrap items-center gap-4 mb-6">
+          <a
+            href="https://app.uniswap.org/swap?chain=robinhood&outputCurrency=TBA"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn-cartoon inline-flex items-center gap-2 px-8 py-4 bg-leaf-400 text-leaf-950 font-display font-bold text-2xl rounded-2xl border-4 border-leaf-950 shadow-cartoon"
+          >
+            Buy Now
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
+          </a>
+          <a
+            href="https://dexscreener.com/robinhood/TBA"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn-cartoon inline-flex items-center gap-2 px-8 py-4 bg-cream text-leaf-950 font-display font-bold text-2xl rounded-2xl border-4 border-leaf-950 shadow-cartoon"
+          >
+            Chart
+          </a>
+        </div>
+
+        <!-- Copy CA -->
+        <div class="max-w-xl">
+          <p class="font-display text-sm uppercase tracking-widest text-leaf-300 mb-2">Contract Address</p>
+          <button
+            type="button"
+            id="copy-ca"
+            class="ca-box w-full flex items-center justify-between gap-3 px-4 py-3 bg-leaf-950/80 text-left rounded-xl border-4 border-leaf-400 shadow-cartoon-lime font-mono text-sm md:text-base text-leaf-100 hover:bg-leaf-900 transition"
+            title="Click to copy"
+          >
+            <span id="ca-text" class="truncate">TBA</span>
+            <span id="copy-label" class="shrink-0 font-display font-bold text-leaf-300 text-sm uppercase tracking-wide">Copy</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <div class="wave-divider text-leaf-800 -mt-1">
+      <svg viewBox="0 0 1440 64" preserveAspectRatio="none" aria-hidden="true">
+        <path fill="currentColor" d="M0,32 C240,64 480,0 720,32 C960,64 1200,0 1440,32 L1440,64 L0,64 Z"></path>
+      </svg>
+    </div>
+
+    <!-- ABOUT -->
+    <section id="about" class="relative bg-leaf-800 py-16 md:py-24">
+      <div class="max-w-6xl mx-auto px-4 grid md:grid-cols-2 gap-10 md:gap-16 items-center">
+        <div class="relative flex justify-center">
+          <div class="absolute -inset-4 bg-leaf-400 rounded-[2rem] rotate-3 border-4 border-leaf-950 opacity-40"></div>
+          <img
+            src="logo.png"
+            alt="Nongwan mascot"
+            class="relative w-64 h-64 md:w-80 md:h-80 object-cover rounded-[2rem] border-4 border-leaf-950 shadow-cartoon-lg animate-float"
+          />
+        </div>
+        <div>
+          <h2 class="font-display font-bold text-4xl md:text-5xl text-leaf-200 mb-4 drop-shadow-[3px_3px_0_#162806]">
+            Who is Nongwan?
+          </h2>
+          <p class="text-lg md:text-xl text-cream/90 leading-relaxed mb-4 font-bold">
+            Nongwan is the chillest capybara on the jungle chain — born to vibe, built to moon,
+            fluent in zero languages and infinite memes.
+          </p>
+          <p class="text-base md:text-lg text-leaf-100/90 leading-relaxed mb-6">
+            Name: <span class="font-display text-leaf-300">Nongwan</span> · Symbol:
+            <span class="font-display text-leaf-300">$Nongwan</span> · Chain:
+            <span class="font-display text-leaf-300">Robinhood ETH</span>
+          </p>
+          <div class="flex flex-wrap gap-3">
+            <span class="px-4 py-2 bg-leaf-400 text-leaf-950 font-display font-bold rounded-full border-3 border-leaf-950 shadow-cartoon-sm border-4">0% Stress</span>
+            <span class="px-4 py-2 bg-cream text-leaf-950 font-display font-bold rounded-full border-4 border-leaf-950 shadow-cartoon-sm">100% Chill</span>
+            <span class="px-4 py-2 bg-leaf-300 text-leaf-950 font-display font-bold rounded-full border-4 border-leaf-950 shadow-cartoon-sm">∞ Memes</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="wave-divider text-leaf-950 rotate-180">
+      <svg viewBox="0 0 1440 64" preserveAspectRatio="none" aria-hidden="true">
+        <path fill="currentColor" d="M0,32 C240,64 480,0 720,32 C960,64 1200,0 1440,32 L1440,64 L0,64 Z"></path>
+      </svg>
+    </div>
+
+    <!-- HOW TO BUY -->
+    <section id="howtobuy" class="relative py-16 md:py-24">
+      <div class="max-w-6xl mx-auto px-4">
+        <div class="text-center mb-12">
+          <h2 class="font-display font-bold text-4xl md:text-6xl text-leaf-300 mb-3 drop-shadow-[3px_3px_0_#162806]">
+            How to Buy
+          </h2>
+          <p class="text-lg md:text-xl text-cream/80 font-bold max-w-2xl mx-auto">
+            Four easy steps to ape into $Nongwan with Robinhood ETH. No PhD required.
+          </p>
+        </div>
+
+        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <!-- Step 1 -->
+          <div class="relative bg-leaf-100 text-leaf-950 rounded-3xl border-4 border-leaf-950 shadow-cartoon p-6 hover:-translate-y-1 transition">
+            <span class="step-num font-stamp text-6xl text-leaf-400 leading-none block mb-3">1</span>
+            <h3 class="font-display font-bold text-2xl mb-2">Get a Wallet</h3>
+            <p class="font-bold text-leaf-800 leading-snug">
+              Download MetaMask or your favorite wallet. Create an account. You’re officially almost Nongwan.
+            </p>
+          </div>
+          <!-- Step 2 -->
+          <div class="relative bg-leaf-200 text-leaf-950 rounded-3xl border-4 border-leaf-950 shadow-cartoon p-6 hover:-translate-y-1 transition">
+            <span class="step-num font-stamp text-6xl text-leaf-500 leading-none block mb-3">2</span>
+            <h3 class="font-display font-bold text-2xl mb-2">Get Robinhood ETH</h3>
+            <p class="font-bold text-leaf-800 leading-snug">
+              Bridge or buy ETH on the Robinhood chain. Fuel up — Nongwan doesn’t walk on empty tanks.
+            </p>
+          </div>
+          <!-- Step 3 -->
+          <div class="relative bg-leaf-300 text-leaf-950 rounded-3xl border-4 border-leaf-950 shadow-cartoon p-6 hover:-translate-y-1 transition">
+            <span class="step-num font-stamp text-6xl text-leaf-600 leading-none block mb-3">3</span>
+            <h3 class="font-display font-bold text-2xl mb-2">Swap on Uniswap</h3>
+            <p class="font-bold text-leaf-800 leading-snug">
+              Open Uniswap on Robinhood, paste the $Nongwan CA, and swap your ETH for pure chill.
+            </p>
+          </div>
+          <!-- Step 4 -->
+          <div class="relative bg-leaf-400 text-leaf-950 rounded-3xl border-4 border-leaf-950 shadow-cartoon p-6 hover:-translate-y-1 transition">
+            <span class="step-num font-stamp text-6xl text-cream leading-none block mb-3">4</span>
+            <h3 class="font-display font-bold text-2xl mb-2">You're Nongwan!</h3>
+            <p class="font-bold text-leaf-900 leading-snug">
+              Welcome to the jungle. Sit. Chill. Flex your $Nongwan. Language optional.
+            </p>
+          </div>
+        </div>
+
+        <div class="mt-12 flex flex-wrap justify-center gap-4">
+          <a
+            href="https://app.uniswap.org/swap?chain=robinhood&outputCurrency=TBA"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn-cartoon inline-flex px-8 py-4 bg-leaf-400 text-leaf-950 font-display font-bold text-xl rounded-2xl border-4 border-leaf-950 shadow-cartoon"
+          >
+            Buy $Nongwan Now
+          </a>
+          <a
+            href="https://dexscreener.com/robinhood/TBA"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn-cartoon inline-flex px-8 py-4 bg-cream text-leaf-950 font-display font-bold text-xl rounded-2xl border-4 border-leaf-950 shadow-cartoon"
+          >
+            View Chart
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- CHART EMBED -->
+    <section id="chart" class="relative py-16 md:py-20 bg-leaf-900/60 border-y-4 border-leaf-500">
+      <div class="max-w-6xl mx-auto px-4">
+        <div class="text-center mb-10">
+          <h2 class="font-display font-bold text-4xl md:text-5xl text-leaf-300 mb-3 drop-shadow-[3px_3px_0_#162806]">
+            Live Chart
+          </h2>
+          <p class="text-cream/80 font-bold text-lg">Watch $Nongwan cook in real time on DexScreener.</p>
+        </div>
+        <div class="rounded-3xl border-4 border-leaf-950 shadow-cartoon-lg overflow-hidden bg-leaf-950 p-2 md:p-3">
+          <div id="dexscreener-embed">
+            <iframe
+              src="https://dexscreener.com/robinhood/TBA?embed=1&theme=dark&trades=0&info=0"
+              title="DexScreener chart for Nongwan"
+              loading="lazy"
+            ></iframe>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TWITTER EMBED -->
+    <section id="tweet" class="relative py-16 md:py-24">
+      <div class="max-w-3xl mx-auto px-4 text-center">
+        <h2 class="font-display font-bold text-4xl md:text-5xl text-leaf-300 mb-3 drop-shadow-[3px_3px_0_#162806]">
+          From the Timeline
+        </h2>
+        <p class="text-cream/80 font-bold text-lg mb-8">
+          The tweet that started the Nongwan lore. Words optional. Vibes mandatory.
+        </p>
+        <div class="twitter-embed-wrap inline-block w-full max-w-xl mx-auto rounded-3xl border-4 border-leaf-950 shadow-cartoon bg-cream p-2 md:p-4">
+          <blockquote class="twitter-tweet" data-theme="light" data-dnt="true">
+            <a href="https://x.com/thedevvor/status/2081600122023018680">Loading tweet…</a>
+          </blockquote>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA BAND -->
+    <section class="relative py-16 bg-leaf-400 border-y-4 border-leaf-950">
+      <div class="max-w-4xl mx-auto px-4 text-center">
+        <h2 class="font-display font-bold text-4xl md:text-5xl text-leaf-950 mb-4">
+          Ready to Nongwan?
+        </h2>
+        <p class="font-bold text-xl text-leaf-800 mb-8">
+          Moodeng ran. Nongwan chill. Who cares about the language — ape in.
+        </p>
+        <div class="flex flex-wrap justify-center gap-4 mb-8">
+          <a
+            href="https://app.uniswap.org/swap?chain=robinhood&outputCurrency=TBA"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn-cartoon inline-flex px-8 py-4 bg-leaf-950 text-leaf-300 font-display font-bold text-2xl rounded-2xl border-4 border-leaf-950 shadow-cartoon"
+          >
+            Buy Now
+          </a>
+          <a
+            href="https://dexscreener.com/robinhood/TBA"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn-cartoon inline-flex px-8 py-4 bg-cream text-leaf-950 font-display font-bold text-2xl rounded-2xl border-4 border-leaf-950 shadow-cartoon"
+          >
+            Chart
+          </a>
+        </div>
+        <div class="flex justify-center gap-5">
+          <a href="https://t.me/NongwanHood" target="_blank" rel="noopener noreferrer" class="hover:scale-110 transition" aria-label="Join Telegram">
+            <img src="tg.png" alt="Telegram" class="w-14 h-14 rounded-full border-4 border-leaf-950 shadow-cartoon-sm" />
+          </a>
+          <a href="https://x.com/NongwanHood" target="_blank" rel="noopener noreferrer" class="hover:scale-110 transition" aria-label="Follow on X">
+            <img src="x.png" alt="X" class="w-14 h-14 rounded-full border-4 border-leaf-950 shadow-cartoon-sm object-cover bg-black" />
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="bg-leaf-950 py-10 border-t-4 border-leaf-500">
+    <div class="max-w-6xl mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-6">
+      <div class="flex items-center gap-3">
+        <img src="logo.png" alt="" class="w-10 h-10 rounded-full border-2 border-leaf-400 object-cover" />
+        <div>
+          <p class="font-display font-bold text-leaf-300 text-xl">Nongwan · $Nongwan</p>
+          <p class="text-sm text-leaf-100/60">On Robinhood ETH. Chill responsibly.</p>
+        </div>
+      </div>
+      <p class="text-sm text-leaf-100/50 text-center md:text-right max-w-md">
+        $Nongwan is a meme coin with no intrinsic value or expectation of financial return.
+        Nongwan ran. In English? Who cares about the language.
+      </p>
+    </div>
+  </footer>
+
+  <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+  <script>
+    (function () {
+      var btn = document.getElementById("copy-ca");
+      var ca = document.getElementById("ca-text");
+      var label = document.getElementById("copy-label");
+      if (!btn || !ca) return;
+
+      btn.addEventListener("click", async function () {
+        var text = ca.textContent.trim();
+        try {
+          await navigator.clipboard.writeText(text);
+          label.textContent = "Copied!";
+          label.classList.add("text-leaf-200");
+          setTimeout(function () {
+            label.textContent = "Copy";
+            label.classList.remove("text-leaf-200");
+          }, 1600);
+        } catch (e) {
+          var range = document.createRange();
+          range.selectNodeContents(ca);
+          var sel = window.getSelection();
+          sel.removeAllRanges();
+          sel.addRange(range);
+          label.textContent = "Select & copy";
+        }
+      });
+    })();
+  </script>
+</body>
+</html>
