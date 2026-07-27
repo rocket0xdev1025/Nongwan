@@ -176,6 +176,89 @@
     .twitter-embed-wrap iframe {
       margin: 0 auto !important;
     }
+
+    /* Sunshine hover on images */
+    .sun-img {
+      position: relative;
+      display: inline-block;
+      overflow: hidden;
+      isolation: isolate;
+    }
+    .sun-img > img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      transition: filter 0.35s ease, transform 0.35s ease;
+    }
+    .sun-img::before,
+    .sun-img::after {
+      content: "";
+      position: absolute;
+      inset: -40%;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.35s ease;
+      z-index: 2;
+    }
+    .sun-img::before {
+      background:
+        radial-gradient(circle at var(--sun-x, 50%) var(--sun-y, 50%),
+          rgba(255, 236, 150, 0.75) 0%,
+          rgba(255, 200, 60, 0.35) 18%,
+          transparent 42%),
+        repeating-conic-gradient(
+          from 0deg at var(--sun-x, 50%) var(--sun-y, 50%),
+          rgba(255, 230, 120, 0.55) 0deg 8deg,
+          transparent 8deg 22deg
+        );
+      mix-blend-mode: screen;
+      animation: sun-spin 8s linear infinite;
+      animation-play-state: paused;
+    }
+    .sun-img::after {
+      background: radial-gradient(
+        circle at var(--sun-x, 50%) var(--sun-y, 50%),
+        rgba(255, 255, 220, 0.55) 0%,
+        rgba(255, 210, 80, 0.2) 25%,
+        transparent 55%
+      );
+      mix-blend-mode: soft-light;
+    }
+    .sun-img:hover::before,
+    .sun-img:hover::after {
+      opacity: 1;
+    }
+    .sun-img:hover::before {
+      animation-play-state: running;
+    }
+    .sun-img:hover > img {
+      filter: brightness(1.12) saturate(1.15) contrast(1.05);
+      transform: scale(1.03);
+    }
+    @keyframes sun-spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* Arrow strike effect */
+    .arrow-strike {
+      position: fixed;
+      left: 0;
+      top: 0;
+      width: 56px;
+      height: 18px;
+      margin-left: -28px;
+      margin-top: -9px;
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0;
+      will-change: transform, opacity;
+    }
+    .arrow-strike svg {
+      display: block;
+      width: 100%;
+      height: 100%;
+      filter: drop-shadow(0 0 4px rgba(255, 220, 80, 0.8));
+    }
   </style>
 </head>
 <body class="font-body text-capy-100 overflow-x-hidden">
@@ -188,11 +271,13 @@
   <header class="fixed top-0 inset-x-0 z-50 bg-leaf-950/80 backdrop-blur-md border-b-4 border-leaf-500">
     <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between gap-4">
       <a href="#top" class="flex items-center gap-3 group">
-        <img
-          src="logo.png"
-          alt="Nongwan logo"
-          class="w-12 h-12 rounded-full border-4 border-leaf-400 shadow-cartoon-sm object-cover group-hover:animate-wiggle"
-        />
+        <span class="sun-img w-12 h-12 rounded-full border-4 border-leaf-400 shadow-cartoon-sm overflow-hidden">
+          <img
+            src="logo.png"
+            alt="Nongwan logo"
+            class="w-full h-full object-cover group-hover:animate-wiggle"
+          />
+        </span>
         <span class="font-display font-bold text-2xl tracking-wide text-leaf-300 drop-shadow-[2px_2px_0_#162806]">
           Nongwan
         </span>
@@ -204,11 +289,11 @@
         <a href="#tweet" class="hover:text-leaf-300 transition">Tweet</a>
       </nav>
       <div class="flex items-center gap-3">
-        <a href="https://t.me/NongwanHood" target="_blank" rel="noopener noreferrer" aria-label="Telegram" class="hover:scale-110 transition">
-          <img src="tg.png" alt="Telegram" class="w-9 h-9 rounded-full border-2 border-leaf-950 shadow-cartoon-sm" />
+        <a href="https://t.me/NongwanHood" target="_blank" rel="noopener noreferrer" aria-label="Telegram" class="hover:scale-110 transition sun-img w-9 h-9 rounded-full border-2 border-leaf-950 shadow-cartoon-sm overflow-hidden">
+          <img src="tg.png" alt="Telegram" class="w-full h-full" />
         </a>
-        <a href="https://x.com/NongwanHood" target="_blank" rel="noopener noreferrer" aria-label="X / Twitter" class="hover:scale-110 transition">
-          <img src="x.png" alt="X" class="w-9 h-9 rounded-full border-2 border-leaf-400 shadow-cartoon-sm object-cover bg-black" />
+        <a href="https://x.com/NongwanHood" target="_blank" rel="noopener noreferrer" aria-label="X / Twitter" class="hover:scale-110 transition sun-img w-9 h-9 rounded-full border-2 border-leaf-400 shadow-cartoon-sm overflow-hidden bg-black">
+          <img src="x.png" alt="X" class="w-full h-full object-cover" />
         </a>
         <a
           href="https://app.uniswap.org/swap?chain=robinhood&outputCurrency=TBA"
@@ -225,13 +310,13 @@
   <main id="top">
     <!-- HERO -->
     <section class="relative min-h-screen flex items-end pt-20">
-      <div class="absolute inset-0">
+      <div class="absolute inset-0 sun-img z-[2]">
         <img
           src="banner.png"
           alt="Nongwan banner — chill capybara in the jungle"
           class="w-full h-full object-cover object-center"
         />
-        <div class="absolute inset-0 hero-overlay"></div>
+        <div class="absolute inset-0 hero-overlay pointer-events-none z-[1]"></div>
       </div>
 
       <div class="relative z-10 w-full max-w-6xl mx-auto px-4 pb-16 md:pb-24 pt-10">
@@ -293,11 +378,13 @@
       <div class="max-w-6xl mx-auto px-4 grid md:grid-cols-2 gap-10 md:gap-16 items-center">
         <div class="relative flex justify-center">
           <div class="absolute -inset-4 bg-leaf-400 rounded-[2rem] rotate-3 border-4 border-leaf-950 opacity-40"></div>
-          <img
-            src="logo.png"
-            alt="Nongwan mascot"
-            class="relative w-64 h-64 md:w-80 md:h-80 object-cover rounded-[2rem] border-4 border-leaf-950 shadow-cartoon-lg animate-float"
-          />
+          <div class="sun-img relative w-64 h-64 md:w-80 md:h-80 rounded-[2rem] border-4 border-leaf-950 shadow-cartoon-lg overflow-hidden animate-float">
+            <img
+              src="logo.png"
+              alt="Nongwan mascot"
+              class="w-full h-full object-cover"
+            />
+          </div>
         </div>
         <div>
           <h2 class="font-display font-bold text-4xl md:text-5xl text-capy-200 mb-4 drop-shadow-[3px_3px_0_#162806]">
@@ -461,11 +548,11 @@
           </a>
         </div>
         <div class="flex justify-center gap-5">
-          <a href="https://t.me/NongwanHood" target="_blank" rel="noopener noreferrer" class="hover:scale-110 transition" aria-label="Join Telegram">
-            <img src="tg.png" alt="Telegram" class="w-14 h-14 rounded-full border-4 border-leaf-950 shadow-cartoon-sm" />
+          <a href="https://t.me/NongwanHood" target="_blank" rel="noopener noreferrer" class="hover:scale-110 transition sun-img w-14 h-14 rounded-full border-4 border-leaf-950 shadow-cartoon-sm overflow-hidden" aria-label="Join Telegram">
+            <img src="tg.png" alt="Telegram" class="w-full h-full" />
           </a>
-          <a href="https://x.com/NongwanHood" target="_blank" rel="noopener noreferrer" class="hover:scale-110 transition" aria-label="Follow on X">
-            <img src="x.png" alt="X" class="w-14 h-14 rounded-full border-4 border-leaf-950 shadow-cartoon-sm object-cover bg-black" />
+          <a href="https://x.com/NongwanHood" target="_blank" rel="noopener noreferrer" class="hover:scale-110 transition sun-img w-14 h-14 rounded-full border-4 border-leaf-950 shadow-cartoon-sm overflow-hidden bg-black" aria-label="Follow on X">
+            <img src="x.png" alt="X" class="w-full h-full object-cover" />
           </a>
         </div>
       </div>
@@ -476,7 +563,9 @@
   <footer class="bg-leaf-950 py-10 border-t-4 border-leaf-500">
     <div class="max-w-6xl mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-6">
       <div class="flex items-center gap-3">
-        <img src="logo.png" alt="" class="w-10 h-10 rounded-full border-2 border-leaf-400 object-cover" />
+        <span class="sun-img w-10 h-10 rounded-full border-2 border-leaf-400 overflow-hidden">
+          <img src="logo.png" alt="" class="w-full h-full object-cover" />
+        </span>
         <div>
           <p class="font-display font-bold text-leaf-300 text-xl">Nongwan · $Nongwan</p>
           <p class="text-sm text-capy-300/60">On Robinhood ETH. Chill responsibly.</p>
@@ -492,29 +581,104 @@
   <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
   <script>
     (function () {
+      /* Copy CA */
       var btn = document.getElementById("copy-ca");
       var ca = document.getElementById("ca-text");
       var label = document.getElementById("copy-label");
-      if (!btn || !ca) return;
+      if (btn && ca) {
+        btn.addEventListener("click", async function () {
+          var text = ca.textContent.trim();
+          try {
+            await navigator.clipboard.writeText(text);
+            label.textContent = "Copied!";
+            label.classList.add("text-leaf-200");
+            setTimeout(function () {
+              label.textContent = "Copy";
+              label.classList.remove("text-leaf-200");
+            }, 1600);
+          } catch (e) {
+            var range = document.createRange();
+            range.selectNodeContents(ca);
+            var sel = window.getSelection();
+            sel.removeAllRanges();
+            sel.addRange(range);
+            label.textContent = "Select & copy";
+          }
+        });
+      }
 
-      btn.addEventListener("click", async function () {
-        var text = ca.textContent.trim();
-        try {
-          await navigator.clipboard.writeText(text);
-          label.textContent = "Copied!";
-          label.classList.add("text-leaf-200");
+      /* Sunshine follows cursor on images */
+      document.querySelectorAll(".sun-img").forEach(function (el) {
+        el.addEventListener("mousemove", function (e) {
+          var rect = el.getBoundingClientRect();
+          var x = ((e.clientX - rect.left) / rect.width) * 100;
+          var y = ((e.clientY - rect.top) / rect.height) * 100;
+          el.style.setProperty("--sun-x", x + "%");
+          el.style.setProperty("--sun-y", y + "%");
+        });
+      });
+
+      /* 3 arrows strike toward cursor on button hover */
+      var arrowSvg =
+        '<svg viewBox="0 0 56 18" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">' +
+        '<path d="M2 9 L38 9" stroke="#ffe566" stroke-width="3" stroke-linecap="round"/>' +
+        '<path d="M34 3 L52 9 L34 15 Z" fill="#ffd23f" stroke="#162806" stroke-width="1.5" stroke-linejoin="round"/>' +
+        '<path d="M6 5 L2 9 L6 13" fill="none" stroke="#c1aa78" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>' +
+        "</svg>";
+
+      function spawnArrows(x, y) {
+        var angles = [-55, 0, 55];
+        var distance = 160 + Math.random() * 40;
+
+        angles.forEach(function (spread, i) {
+          var el = document.createElement("div");
+          el.className = "arrow-strike";
+          el.innerHTML = arrowSvg;
+          document.body.appendChild(el);
+
+          var startAngle = (-90 + spread) * (Math.PI / 180);
+          var startX = x + Math.cos(startAngle) * distance;
+          var startY = y + Math.sin(startAngle) * distance;
+          var travelAngle = (Math.atan2(y - startY, x - startX) * 180) / Math.PI;
+
+          el.style.transform =
+            "translate(" + startX + "px," + startY + "px) rotate(" + travelAngle + "deg) scale(0.7)";
+          el.style.opacity = "0";
+
+          requestAnimationFrame(function () {
+            el.style.transition =
+              "transform 0.45s cubic-bezier(0.2, 0.8, 0.2, 1) " +
+              i * 0.05 +
+              "s, opacity 0.12s ease " +
+              i * 0.05 +
+              "s";
+            el.style.opacity = "1";
+            el.style.transform =
+              "translate(" + x + "px," + y + "px) rotate(" + travelAngle + "deg) scale(1)";
+          });
+
           setTimeout(function () {
-            label.textContent = "Copy";
-            label.classList.remove("text-leaf-200");
-          }, 1600);
-        } catch (e) {
-          var range = document.createRange();
-          range.selectNodeContents(ca);
-          var sel = window.getSelection();
-          sel.removeAllRanges();
-          sel.addRange(range);
-          label.textContent = "Select & copy";
-        }
+            el.style.transition = "opacity 0.2s ease, transform 0.2s ease";
+            el.style.opacity = "0";
+            el.style.transform =
+              "translate(" + x + "px," + y + "px) rotate(" + travelAngle + "deg) scale(0.4)";
+            setTimeout(function () {
+              el.remove();
+            }, 220);
+          }, 520 + i * 50);
+        });
+      }
+
+      document.querySelectorAll(".btn-cartoon, #copy-ca").forEach(function (button) {
+        var cooldown = false;
+        button.addEventListener("mouseenter", function (e) {
+          if (cooldown) return;
+          cooldown = true;
+          spawnArrows(e.clientX, e.clientY);
+          setTimeout(function () {
+            cooldown = false;
+          }, 650);
+        });
       });
     })();
   </script>
